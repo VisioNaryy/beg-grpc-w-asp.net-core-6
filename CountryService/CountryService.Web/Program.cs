@@ -1,8 +1,10 @@
 using System.IO.Compression;
+using Calzolari.Grpc.AspNetCore.Validation;
 using CountryService.Web.ExternalServices;
 using CountryService.Web.Interceptors;
 using CountryService.Web.Providers;
 using CountryService.Web.Services;
+using CountryService.Web.Validation;
 using Grpc.Core;
 using Grpc.Net.Compression;
 using CountryServiceClass = CountryService.Web.Services.CountryService;
@@ -19,18 +21,21 @@ builder.Services.AddGrpc(options =>
     options.EnableDetailedErrors = true;
     options.MaxReceiveMessageSize = 6291456; // 6 MB
     options.MaxSendMessageSize = 6291456; // 6 MB
-    
+
     options.CompressionProviders = new List<ICompressionProvider>
     {
         new BrotliCompressionProvider(CompressionLevel.Optimal)
     };
-    
+
     options.ResponseCompressionAlgorithm = "br";
     options.ResponseCompressionLevel = CompressionLevel.Optimal;
     options.Interceptors.Add<ExceptionInterceptor>();
+    options.EnableMessageValidation();   // Register custom ExceptionInterceptor interceptor
 });
 builder.Services.AddGrpcReflection();
 builder.Services.AddSingleton<ICountryManagementService, CountryManagementService>();
+builder.Services.AddGrpcValidation();
+builder.Services.AddValidators();
 
 var app = builder.Build();
 
