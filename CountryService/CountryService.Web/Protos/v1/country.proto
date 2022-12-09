@@ -1,13 +1,13 @@
 ﻿syntax = "proto3";
 
-package country;
+package country.v1;
 
-option csharp_namespace = "CountryService.Web";
+option csharp_namespace = "CountryServices.v1";
 
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 
-service Country {
+service CountryService {
   rpc GetAll(google.protobuf.Empty) returns (stream CountryReply);
   rpc Get(CountryIdRequest) returns (CountryReply);
   rpc Delete(stream CountryIdRequest) returns (google.protobuf.Empty);

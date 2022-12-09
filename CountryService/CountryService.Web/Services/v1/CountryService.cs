@@ -1,11 +1,12 @@
-﻿using System.Diagnostics;
-using CountryService.Web.ExternalServices;
+﻿using CountryService.Web.ExternalServices;
+using CountryService.Web.ExternalServices.v1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
+using CountryServices.v1;
 
-namespace CountryService.Web.Services;
+namespace CountryService.Web.Services.v1;
 
-public class CountryService : Country.CountryBase
+public class CountryService : CountryServices.v1.CountryService.CountryServiceBase
 {
     private readonly ICountryManagementService _countryManagementService;
     private readonly ILogger<CountryService> _logger;

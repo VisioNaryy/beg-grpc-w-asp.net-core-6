@@ -1,6 +1,7 @@
-﻿using Google.Protobuf.WellKnownTypes;
+﻿using CountryServices.v1;
+using Google.Protobuf.WellKnownTypes;
 
-namespace CountryService.Web.ExternalServices;
+namespace CountryService.Web.ExternalServices.v1;
 
 public class CountryManagementService : ICountryManagementService
 {

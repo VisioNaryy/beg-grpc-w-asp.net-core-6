@@ -7,8 +7,30 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
-        <Protobuf Include="Protos\country.proto" GrpcServices="Server" />
+        <Protobuf Include="Protos\greet.proto">
+          <GrpcServices>Server</GrpcServices>
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>obj\Debug\net7.0\</OutputDir>
+          <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
+        <Protobuf Include="Protos\v1\country.proto">
+          <GrpcServices>Server</GrpcServices>
+          <Access>Public</Access>
+          <ProtoCompile>True</ProtoCompile>
+          <CompileOutputs>True</CompileOutputs>
+          <OutputDir>obj\Debug\net7.0\v1\</OutputDir>
+          <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
+        <Protobuf Include="Protos\v2\country.proto">
+            <GrpcServices>Server</GrpcServices>
+            <Access>Public</Access>
+            <ProtoCompile>True</ProtoCompile>
+            <CompileOutputs>True</CompileOutputs>
+            <OutputDir>obj\Debug\net7.0\v2\</OutputDir>
+            <Generator>MSBuild:Compile</Generator>
+        </Protobuf>
     </ItemGroup>
 
     <ItemGroup>
@@ -17,6 +39,17 @@
         <PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
         <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.50.0" />
         <PackageReference Include="Microsoft.Data.SqlClient" Version="5.0.1" />
+    </ItemGroup>
+
+<!--    <ItemGroup>-->
+<!--      <None Update="Protos\v2\country.proto">-->
+<!--        <CopyToOutputDirectory>Always</CopyToOutputDirectory>-->
+<!--      </None>-->
+<!--    </ItemGroup>-->
+
+    <ItemGroup>
+      <Folder Include="ExternalServices\v2" />
+      <Folder Include="Validation\v2" />
     </ItemGroup>
 
 </Project>

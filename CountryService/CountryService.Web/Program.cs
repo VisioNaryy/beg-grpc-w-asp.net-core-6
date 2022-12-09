@@ -1,13 +1,14 @@
 using System.IO.Compression;
 using Calzolari.Grpc.AspNetCore.Validation;
-using CountryService.Web.ExternalServices;
+using CountryService.Web.ExternalServices.v1;
 using CountryService.Web.Interceptors;
 using CountryService.Web.Providers;
 using CountryService.Web.Services;
-using CountryService.Web.Validation;
 using Grpc.Core;
 using Grpc.Net.Compression;
-using CountryServiceClass = CountryService.Web.Services.CountryService;
+
+using v1 = CountryService.Web.Services.v1;
+using v2 = CountryService.Web.Services.v2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,7 @@ builder.Services.AddGrpc(options =>
 });
 builder.Services.AddGrpcReflection();
 builder.Services.AddSingleton<ICountryManagementService, CountryManagementService>();
+builder.Services.AddSingleton<ProtoService>();
 builder.Services.AddGrpcValidation();
 builder.Services.AddValidators();
 
@@ -42,10 +44,34 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 app.MapGrpcReflectionService();
 app.MapGrpcService<GreeterService>();
-app.MapGrpcService<CountryServiceClass>();
+app.MapGrpcService<v1.CountryService>();
+app.MapGrpcService<v2.CountryService>();
+
 app.MapGet("/",
     () =>
         "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
+
+app.MapGet("/protos", (ProtoService protoService) => Results.Ok(protoService.GetAll()));
+
+app.MapGet("/protos/v{version:int}/{protoName}", (ProtoService
+    protoService, int version, string protoName) =>
+{
+    var filePath = protoService.Get(version, protoName);
+    if (string.IsNullOrEmpty(filePath))
+        return Results.File(filePath);
+    
+    return Results.NotFound();
+});
+
+app.MapGet("/protos/v{version:int}/{protoName}/view", async (ProtoService
+    protoService, int version, string protoName) =>
+{
+    var text = await protoService.ViewAsync(version, protoName);
+    if (!string.IsNullOrEmpty(text))
+        return Results.Text(text);
+    
+    return Results.NotFound();
+});
 
 app.Use(async (context, next) =>
 {

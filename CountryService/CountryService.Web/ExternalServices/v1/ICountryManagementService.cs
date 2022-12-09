@@ -1,4 +1,6 @@
-﻿namespace CountryService.Web.ExternalServices;
+﻿using CountryServices.v1;
+
+namespace CountryService.Web.ExternalServices.v1;
 
 public interface ICountryManagementService
 {

@@ -1,6 +1,7 @@
-﻿using FluentValidation;
+﻿using CountryServices.v1;
+using FluentValidation;
 
-namespace CountryService.Web.Validation;
+namespace CountryService.Web.Validation.v1;
 
 public class CountryCreationRequestValidator : AbstractValidator<CountryCreationRequest>
 {
