@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="6.2.0" />
+      <PackageReference Include="Google.Protobuf" Version="3.21.11" />
+      <PackageReference Include="Grpc.AspNetCore" Version="2.50.0" />
+      <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.50.0" />
+      <PackageReference Include="Grpc.Net.Client" Version="2.50.0" />
+      <PackageReference Include="Grpc.Net.ClientFactory" Version="2.50.0" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="7.0.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Protos\v1\country.proto" />
+      <Protobuf Include="Protos\v1\country.proto">
+        <GrpcServices>Client</GrpcServices>
+      </Protobuf>
+      <None Remove="Protos\v2\country.proto" />
+      <Protobuf Include="Protos\v2\country.proto">
+          <GrpcServices>Client</GrpcServices>
+      </Protobuf>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="appsettings.json" />
+      <Content Include="appsettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Clients" />
+    </ItemGroup>
+
+</Project>
