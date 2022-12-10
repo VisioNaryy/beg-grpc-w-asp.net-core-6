@@ -57,7 +57,7 @@ app.MapGet("/protos/v{version:int}/{protoName}", (ProtoService
     protoService, int version, string protoName) =>
 {
     var filePath = protoService.Get(version, protoName);
-    if (string.IsNullOrEmpty(filePath))
+    if (!string.IsNullOrEmpty(filePath))
         return Results.File(filePath);
     
     return Results.NotFound();

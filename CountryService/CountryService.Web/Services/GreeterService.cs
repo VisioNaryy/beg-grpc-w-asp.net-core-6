@@ -1,5 +1,4 @@
 using Grpc.Core;
-using CountryService.Web;
 
 namespace CountryService.Web.Services;
 

@@ -1,5 +1,4 @@
-﻿using CountryService.Web.ExternalServices;
-using CountryService.Web.ExternalServices.v1;
+﻿using CountryService.Web.ExternalServices.v1;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using CountryServices.v1;

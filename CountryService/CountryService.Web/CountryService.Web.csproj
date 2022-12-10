@@ -22,6 +22,7 @@
           <CompileOutputs>True</CompileOutputs>
           <OutputDir>obj\Debug\net7.0\v1\</OutputDir>
           <Generator>MSBuild:Compile</Generator>
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Protobuf>
         <Protobuf Include="Protos\v2\country.proto">
             <GrpcServices>Server</GrpcServices>

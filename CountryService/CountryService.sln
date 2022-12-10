@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountryService.Web", "CountryService.Web\CountryService.Web.csproj", "{EDC03AF1-2C00-4CDE-A397-82F93E413B93}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CountryServiceClient", "CountryServiceClient\CountryServiceClient.csproj", "{D6201EF9-A68B-4E20-A37E-7A33A15B8293}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{EDC03AF1-2C00-4CDE-A397-82F93E413B93}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDC03AF1-2C00-4CDE-A397-82F93E413B93}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDC03AF1-2C00-4CDE-A397-82F93E413B93}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6201EF9-A68B-4E20-A37E-7A33A15B8293}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6201EF9-A68B-4E20-A37E-7A33A15B8293}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6201EF9-A68B-4E20-A37E-7A33A15B8293}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6201EF9-A68B-4E20-A37E-7A33A15B8293}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
