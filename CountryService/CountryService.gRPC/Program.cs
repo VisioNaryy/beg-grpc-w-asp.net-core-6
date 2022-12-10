@@ -1,12 +1,23 @@
+using CountryService.DAL.EF.Contexts;
+using CountryService.DAL.EF.Repositories;
+using CountryService.Domain.Repositories;
 using CountryService.gRPC.Services;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
+var services = builder.Services;
 
-// Additional configuration is required to successfully run gRPC on macOS.
-// For instructions on how to configure Kestrel and gRPC clients on macOS, visit https://go.microsoft.com/fwlink/?linkid=2099682
+var configuration = builder.Configuration;
+var options = configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
-builder.Services.AddGrpc();
+services.AddGrpc();
+services.AddDbContext<CountryContext>(x =>
+{
+    x.UseSqlServer(options);
+});
+services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+services.AddScoped<ICountryRepository, CountryRepository>();
 
 var app = builder.Build();
 

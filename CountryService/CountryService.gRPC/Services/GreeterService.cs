@@ -1,5 +1,4 @@
 using Grpc.Core;
-using CountryService.gRPC;
 
 namespace CountryService.gRPC.Services;
 
