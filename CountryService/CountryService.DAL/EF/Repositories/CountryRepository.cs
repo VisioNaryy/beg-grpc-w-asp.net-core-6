@@ -12,25 +12,23 @@ public class CountryRepository : ICountryRepository
         _countryContext = countryContext;
         _mapper = mapper;
     }
-    
-    public async ValueTask<int> CreateAsync(CountryCreateDto toCountryCreate)
+
+    public async ValueTask<int> CreateAsync(CountryCreateDto countryCreateDto)
     {
-        var country = _mapper.Map<Country>(toCountryCreate);
-        
+        var country = _mapper.Map<Country>(countryCreateDto);
+
         await _countryContext.Countries.AddAsync(country);
         await _countryContext.SaveChangesAsync();
-        
+
         return country.Id;
     }
 
     public async Task<int> UpdateAsync(CountryUpdateDto toCountryUpdate)
     {
         var country = await _countryContext.Countries.SingleOrDefaultAsync(x => x.Id == toCountryUpdate.Id);
-        
-        if (country == null) { throw new Exception("Unable to find the country"); }
-        
+
         _mapper.Map(toCountryUpdate, country);
-        
+
         return await _countryContext.SaveChangesAsync();
     }
 
@@ -38,25 +36,30 @@ public class CountryRepository : ICountryRepository
     {
         var country = await _countryContext.Countries.SingleOrDefaultAsync(x => x.Id == id);
 
-        if (country == null) { throw new Exception("Unable to find the country"); }
+        if (country != null) _countryContext.Countries.Remove(country);
 
-        _countryContext.Countries.Remove(country);
-        
-        return await _countryContext.SaveChangesAsync(); 
+        return await _countryContext.SaveChangesAsync();
     }
 
     public async Task<CountryReadDto> GetAsync(int id)
     {
-        var country = await _countryContext.Countries.AsNoTracking().SingleOrDefaultAsync(x => x.Id == id);
-
-        if (country == null) { throw new Exception("Unable to find the country"); }
+        var country = await _countryContext.Countries
+            .AsNoTracking()
+            .Include(c => c.CountryLanguages)
+            .ThenInclude(cl => cl.Language)
+            .SingleOrDefaultAsync(x => x.Id == id);
 
         return _mapper.Map<CountryReadDto>(country);
     }
 
     public async Task<IEnumerable<CountryReadDto>> GetAllAsync()
     {
-        var countries = await _countryContext.Countries.AsNoTracking().Select(x => _mapper.Map<CountryReadDto>(x)).ToListAsync();
+        var countries = await _countryContext.Countries
+            .AsNoTracking()
+            .Include(c => c.CountryLanguages)
+            .ThenInclude(cl => cl.Language)
+            .Select(x => _mapper.Map<CountryReadDto>(x))
+            .ToListAsync();
 
         return countries;
     }

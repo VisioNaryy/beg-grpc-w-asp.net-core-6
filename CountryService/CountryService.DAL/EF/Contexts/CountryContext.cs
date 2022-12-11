@@ -1,12 +1,10 @@
-﻿using CountryService.DAL.EF.Config;
-
-namespace CountryService.DAL.EF.Contexts;
+﻿namespace CountryService.DAL.EF.Contexts;
 
 public class CountryContext : DbContext
 {
     public DbSet<Country> Countries { get; set; }
     public DbSet<Language> Languages { get; set; }
-    public DbSet<CountryLanguage> CountryLanguages { get; set; }
+    public DbSet<CountryLanguage> CountryLanguage { get; set; }
     
     public CountryContext(DbContextOptions<CountryContext> options) : base(options)
     {

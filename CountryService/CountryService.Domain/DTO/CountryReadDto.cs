@@ -8,5 +8,5 @@ public record CountryReadDto
     public string FlagUri { get; init; }
     public string CapitalCity { get; init; }
     public string Anthem { get; init; }
-    public IEnumerable<string> Languages { get; init; }
+    public ICollection<string> Languages { get; init; }
 }

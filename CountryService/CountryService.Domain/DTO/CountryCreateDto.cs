@@ -8,5 +8,5 @@ public record CountryCreateDto
     public string CapitalCity { get; set; }
     public string Anthem { get; set; }
     public DateTime CreatedDate { get; set; }
-    public IEnumerable<int> Languages { get; set; }
+    public ICollection<int> Languages { get; set; }
 }

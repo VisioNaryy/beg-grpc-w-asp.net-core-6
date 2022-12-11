@@ -9,14 +9,18 @@ public class AutoMapperProfiles : Profile
     public AutoMapperProfiles()
     {
         CreateMap<CountryCreateDto, Country>()
-            .ForMember(dest => dest.Languages,
+            .ForMember(dest => dest.CountryLanguages,
                 opt =>
-                    opt.MapFrom(src => src.Languages.Select(x => new CountryLanguage {LanguageId = x}).ToList()));
+                    opt.MapFrom(src => src.Languages.Select(x => new CountryLanguage { LanguageId = x}).ToList()));
 
-        CreateMap<CountryUpdateDto, Country>();
+        CreateMap<CountryUpdateDto, Country>()
+            .ForMember(dest => dest.UpdateDate,
+                opt =>
+                    opt.MapFrom(src => DateTime.UtcNow));
+        
         CreateMap<Country, CountryReadDto>()
             .ForMember(dest => dest.Languages,
                 opt => 
-                    opt.MapFrom(src => src.Languages.Select(x => x.Name)));
+                    opt.MapFrom(src => src.CountryLanguages.Select(x => x.Language.Name).ToList()));
     }
 }

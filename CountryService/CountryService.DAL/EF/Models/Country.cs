@@ -10,5 +10,5 @@ public class Country
     public string Anthem { get; set; }
     public DateTime CreateDate { get; set; }
     public DateTime? UpdateDate { get; set; }
-    public ICollection<Language> Languages { get; set; }
+    public ICollection<CountryLanguage> CountryLanguages { get; set; }
 }
