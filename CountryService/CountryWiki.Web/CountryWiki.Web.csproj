@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\CountryWiki.BLL\CountryWiki.BLL.csproj" />
       <ProjectReference Include="..\CountryWiki.DAL\CountryWiki.DAL.csproj" />
     </ItemGroup>
 
