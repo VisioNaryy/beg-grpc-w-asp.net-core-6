@@ -34,6 +34,8 @@ var loggerFactory = LoggerFactory.Create(logging =>
     logging.SetMinimumLevel(LogLevel.Trace);
 });
 
+var section = builder.Configuration.GetSection("CountryGrpcServiceUri").Value;
+
 builder.Services.AddGrpcClient<CountryGrpc.CountryGrpcClient>(o =>
     {
         o.Address = new Uri(builder.Configuration.GetSection("CountryGrpcServiceUri").Value);
