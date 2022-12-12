@@ -1,0 +1,48 @@
+syntax = "proto3";
+
+option csharp_namespace = "CountryWiki.DAL.v1";
+package CountryGrpc.v1;
+
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+service CountryGrpc {
+  rpc GetAll(google.protobuf.Empty) returns (stream CountryReply) {}
+  rpc Get(CountryIdRequest) returns (CountryReply) {}
+  rpc Update(CountryUpdateRequest) returns (google.protobuf.Empty) {}
+  rpc Delete(CountryIdRequest) returns (google.protobuf.Empty) {}
+  rpc Create(stream CountryCreationRequest) returns (stream CountryCreationReply) {}
+}
+
+message CountryReply {
+  int32 Id = 1;
+  string Name = 2;
+  string Description = 3;
+  string FlagUri = 4;
+  string Anthem = 5;
+  string CapitalCity = 6;
+  repeated string Languages = 7;
+}
+
+message CountryIdRequest {
+  int32 Id = 1;
+}
+
+message CountryUpdateRequest {
+  int32 Id = 1;
+  string Description = 2;
+}
+
+message CountryCreationRequest {
+  string Name = 1;
+  string Description = 2;
+  string FlagUri = 3;
+  string Anthem = 4;
+  string CapitalCity = 5;
+  repeated int32 Languages = 7;
+}
+
+message CountryCreationReply {
+  int32 Id = 1;
+  string Name = 2;
+}
