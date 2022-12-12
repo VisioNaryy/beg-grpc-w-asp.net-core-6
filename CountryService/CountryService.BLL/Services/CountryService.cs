@@ -1,6 +1,4 @@
-﻿using CountryService.DAL.EF.Models;
-
-namespace CountryService.BLL.Services;
+﻿namespace CountryService.BLL.Services;
 
 public class CountryService : ICountryService
 {

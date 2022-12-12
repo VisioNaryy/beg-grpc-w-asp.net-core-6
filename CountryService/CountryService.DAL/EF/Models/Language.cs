@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace CountryService.DAL.EF.Models;
+﻿namespace CountryService.DAL.EF.Models;
 
 public class Language
 {
