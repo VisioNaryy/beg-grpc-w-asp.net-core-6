@@ -1,10 +1,17 @@
+
+using System.IO.Compression;
 using CountryWiki.BLL.Services;
 using CountryWiki.DAL.Repositories;
+using CountryWiki.DAL.v1;
 using CountryWiki.Domain.Repositories;
 using CountryWiki.Domain.Services;
 using CountryWiki.Web.BackgroundServices;
 using CountryWiki.Web.Channels;
+using CountryWiki.Web.Interceptors;
 using CountryWiki.Web.Options;
+using CountryWiki.Web.Providers;
+using Grpc.Net.Client.Web;
+using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +33,22 @@ var loggerFactory = LoggerFactory.Create(logging =>
     logging.AddConsole();
     logging.SetMinimumLevel(LogLevel.Trace);
 });
+
+builder.Services.AddGrpcClient<CountryGrpc.CountryGrpcClient>(o =>
+    {
+        o.Address = new Uri(builder.Configuration.GetSection("CountryGrpcServiceUri").Value);
+    })
+    .ConfigurePrimaryHttpMessageHandler(() => new GrpcWebHandler(new HttpClientHandler()))
+    .AddInterceptor(() => new TracerInterceptor(loggerFactory.CreateLogger<TracerInterceptor>()))
+    .ConfigureChannel(o =>
+    {
+        o.CompressionProviders = new List<Grpc.Net.Compression.ICompressionProvider>
+        {
+            new CustomBrotliCompressionProvider(CompressionLevel.Optimal)
+        };
+        o.MaxReceiveMessageSize = 6291456; // 6 MB,
+        o.MaxSendMessageSize = 6291456; // 6 MB
+    });
 
 var app = builder.Build();
 
